@@ -1,3 +1,6 @@
 [submodule "ex-nest-demo"]
 	path = ex-nest-demo
 	url = https://github.com/chelizichen/ex-nest-demo.git
+[submodule "ex-electron"]
+	path = ex-electron
+	url = https://github.com/chelizichen/ex-electron.git
