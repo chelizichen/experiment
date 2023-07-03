@@ -17,11 +17,9 @@ const commonConfig = {
 }
 // 这个对象保存着之前的配置
 
-module.exports = (env) => {
-    console.log(env.production);
+module.exports = (mode) => {
     // 判断当前的模式
-    const mode = env.production ? 'production' : 'development'
-    let config = null
+    let config = null;
     // 根据不同模式，导入不同配置
     if (mode === 'production') {
         config = require('./webpack.prod')

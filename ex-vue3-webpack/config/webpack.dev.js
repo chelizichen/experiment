@@ -105,18 +105,18 @@ module.exports = {
             publicPath: '/tgoperate/', // 公共路径 这个是其他文件地址的路径
         },
         port: "3419",
-        proxy: {
-            '/api': {
-                target: 'http://localhost:3411/api', // 你要请求的目标接口地址
-                changeOrigin: true, // 改变请求的源
-                pathRewrite: {
-                    '^/api': '', // 将URL中的/api路径替换为空字符串
-                },
-                headers: {
-                    'Access-Control-Allow-Origin': '*', // 添加此行
-                },
-            }
-        },
+        // proxy: {
+        //     '/api': {
+        //         target: 'http://localhost:3411/api', // 你要请求的目标接口地址
+        //         changeOrigin: true, // 改变请求的源
+        //         pathRewrite: {
+        //             '^/api': '', // 将URL中的/api路径替换为空字符串
+        //         },
+        //         headers: {
+        //             'Access-Control-Allow-Origin': '*', // 添加此行
+        //         },
+        //     }
+        // },
     },
     /**
      * Webpack配置中的output选项用于定义输出文件的相关配置。下面列出了output对象中常用的选项：

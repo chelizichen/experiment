@@ -1,7 +1,7 @@
 const express = require("express");
-const { join } = require("path");
+const { join,resolve } = require("path");
 const fs = require('fs');
-const { router } = require("./router/test");
+// const { router } = require(resolve("./src","router/test"));
 const ServerApplication = express();
 
 // // 开发环境设置跨域
@@ -18,8 +18,16 @@ const ServerApplication = express();
 
 ServerApplication.use("/tgoperate/",express.static('public/assets'))
 
-ServerApplication.use("/api", router);
-
-ServerApplication.listen(3411, function () {
-    console.log("app is listen on localhost:3411");
+ServerApplication.use("/api/test", function (_, res) {
+      res.send({
+        msg: "Hello Webpack",
+      });
 });
+
+module.exports = {
+  ServerApplication,
+};
+
+// ServerApplication.listen(3411, function () {
+//     console.log("app is listen on localhost:3411");
+// });

@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "bin": {
+    "up-test": "bin/test.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "concurrently -k \"npm run dev:client\" \"npm run dev:server\"",
@@ -11,7 +14,8 @@
     "build": "concurrently -k \"npm run build:server\"   \"npm run build:client\"",
     "build:client": "webpack --mode production --config ./config/webpack.config.js ",
     "build:server": "tsc --project tsconfig.server.json",
-    "start": "node dist/app.js"
+    "start": "node dist/app.js",
+    "debug": "up-test run dev"
   },
   "keywords": [],
   "author": "",
@@ -35,13 +39,16 @@
     "typescript": "^5.1.6",
     "vue-loader": "^17.0.1",
     "webpack": "^5.88.1",
+    "webpack-chain": "^6.5.1",
     "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^4.15.1"
+    "webpack-dev-server": "^4.15.1",
+    "webpack-merge": "^5.9.0"
   },
   "dependencies": {
     "@types/express": "^4.17.17",
     "@types/node": "^20.3.3",
     "axios": "^1.4.0",
+    "commander": "^11.0.0",
     "concurrently": "^8.2.0",
     "core-js": "^3.31.0",
     "express": "^4.18.2",
@@ -50,8 +57,7 @@
     "pinia": "^2.1.4",
     "ts-node-dev": "^2.0.0",
     "vue": "^3.2.36",
-    "vue-router": "^4.2.2",
-    "webpack-merge": "^5.9.0"
+    "vue-router": "^4.2.2"
   },
   "browserslist": [
     "> 1%",
