@@ -5,3 +5,8 @@ nest-demo/dist
 ex-script/node_modules
 
 ex-vue3-webpack/node_modules
+
+ex-vue3-webpack/dist
+
+ex-vue3-webpack/public/assets
+
