@@ -2,9 +2,11 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "dist",
-    "module": "commonjs",
+    "module": "CommonJS",
     "noEmit": false,
+    "esModuleInterop": true,
+    "moduleResolution": "node"
   },
+  "exclude": ["./src/client","dist/*"],
   "include": ["./src/*.ts","./src/router/*.ts"],
-  "exclude": ["./src/client","dist/*"]
 }

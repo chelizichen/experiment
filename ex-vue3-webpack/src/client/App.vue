@@ -13,8 +13,8 @@ import { testRequest } from '@/api/test';
 import { onMounted } from 'vue';
 
 onMounted(async () => {
-    // const data = await testRequest()
-    state.msg = "hello webpack"
+    const data = await testRequest()
+    state.msg = data.data.msg
 })
 
 const state = reactive({

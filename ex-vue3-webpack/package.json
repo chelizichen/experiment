@@ -57,7 +57,8 @@
     "pinia": "^2.1.4",
     "ts-node-dev": "^2.0.0",
     "vue": "^3.2.36",
-    "vue-router": "^4.2.2"
+    "vue-router": "^4.2.2",
+    "webpack-dev-middleware": "^6.1.1"
   },
   "browserslist": [
     "> 1%",

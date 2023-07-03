@@ -1,12 +1,12 @@
-import { Router } from "express";
+const { Router } = require("express");
 const router = Router()
 
-router.get("/test", function (req, res: any) {
+router.get("/test", function (req, res) {
   res.send({
     msg: "Hello Webpack",
   });
 });
 
-export {
-    router
+module.exports =  {
+  router
 }
