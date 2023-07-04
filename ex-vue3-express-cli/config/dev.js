@@ -1,9 +1,10 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ForkTsCheckerWebapckPlugin = require('fork-ts-checker-webpack-plugin')// 导入该插件
 // PATH 模块
 const path = require('path');
-function join(...args) {
-    return path.resolve(...args)
+const { cwd } = require('process');
+
+function resolve(...args) {
+    return path.resolve(cwd(),...args)
 }
 
 
@@ -61,16 +62,6 @@ module.exports = {
     target: 'web',
     mode: "development",
     stats: 'errors-only',
-    entry: {
-        vueApp: join(__dirname, '../src', 'client', 'main.ts')
-    },
-    resolve: {
-        extensions: [".ts", ".js",],
-        alias: {
-            '@': join(__dirname, '../src', 'client')// 这样配置后 @ 可以指向 src 目录
-        }
-    },
-
     // 优化的内容
     optimization: {
         // splitChunks: {
@@ -100,54 +91,14 @@ module.exports = {
                 serveIndex：一个布尔值，指示DevServer是否应该在缺少索引文件时显示目录列表，默认为false。
          */
         static: {
-            directory: join(__dirname, '../public', 'assets'),
+            directory: resolve('public', 'assets'), // 默认 不允许修改
             watch: true,
-            publicPath: '/tgoperate/', // 公共路径 这个是其他文件地址的路径
+            publicPath: '/center/', // 公共路径 这个是其他文件地址的路径
         },
         port: "3419",
-        // proxy: {
-        //     '/api': {
-        //         target: 'http://localhost:3411/api', // 你要请求的目标接口地址
-        //         changeOrigin: true, // 改变请求的源
-        //         pathRewrite: {
-        //             '^/api': '', // 将URL中的/api路径替换为空字符串
-        //         },
-        //         headers: {
-        //             'Access-Control-Allow-Origin': '*', // 添加此行
-        //         },
-        //     }
-        // },
-    },
-    /**
-     * Webpack配置中的output选项用于定义输出文件的相关配置。下面列出了output对象中常用的选项：
-        filename: 定义输出文件的文件名。可以使用占位符（placeholders）来生成不同的文件名，
-        例如 [name] 表示入口文件的名称，[hash] 表示编译过程中生成的哈希值。
-    
-        path: 定义输出文件的存储路径。可以是绝对路径或相对于配置文件的相对路径。
-    
-        publicPath: 定义在引用输出文件时的公共路径（public path）。
-        可以是绝对路径或相对路径。它在处理静态资源时非常有用，例如图片、字体等文件的引用路径。
-    
-        chunkFilename: 定义非入口文件（chunk）的文件名。类似于filename选项，可以使用占位符来生成不同的文件名。
-    
-        library: 定义输出库（library）的名称。可以通过该选项将你的代码打包成一个可复用的库，供其他项目使用。
-    
-        libraryTarget: 定义输出库的目标环境。可以是 var、umd、commonjs2、commonjs、amd、this、window、global 等选项。
-        
-        pathinfo: 一个布尔值，用于控制是否在生成的包中包含有关模块路径的注释。
-        默认情况下为 false，意味着生成的包将不包含注释。
-        这些选项允许你对输出文件进行灵活的配置，以满足你的需求。根据你的项目类型和目标环境，你可以选择适合的选项进行配置。
-     */
-    output: {
-        path: join(__dirname, '../public', 'assets'),
-        filename: 'bundle.js',
-        publicPath: '/tgoperate/' // 公共路径 这个是其他文件地址的路径
     },
     plugins: [
-        new HtmlWebpackPlugin({
-            title: 'Demo',
-            template: join(__dirname, '../public', 'index.html')
-        }),
+
         new ForkTsCheckerWebapckPlugin()
     ],
     module: {
@@ -174,14 +125,14 @@ module.exports = {
             // ts
             {
                 test: /\.ts$/,
-                exclude: [
-                    /node_modules/,
-                    join(__dirname, "../src/router"),
-                    join(__dirname, "../src/app.ts"),
-                ],
-                include: [
-                    join(__dirname,"../src/client")
-                ],
+                // exclude: [
+                //     /node_modules/,
+                //     resolve("src/router"),
+                //     resolve("src/app.ts"),
+                // ],
+                // include: [
+                //     resolve("src/client")
+                // ],
                 use: {
                     loader: 'ts-loader',
                     options: {

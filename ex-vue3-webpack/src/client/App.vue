@@ -2,6 +2,7 @@
     <div>
         <div class="hello">{{ state.msg }} {{ state.num }}</div>
         <button @click="add()">click to add</button>
+        <div>created by chelizichen</div>
         <RouterView></RouterView>
     </div>
 </template> 
