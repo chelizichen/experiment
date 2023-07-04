@@ -36,7 +36,6 @@ program.version("1.0.0")
                 throw new Error(`chain call error:${error}`);
             }
             const afterMergeConfig = merge(baseConfig, clientConfig.toConfig(), devConfig)
-            console.log(afterMergeConfig.module.rules);
             const compiler = webpack(afterMergeConfig);
 
             const devServerOptions = {

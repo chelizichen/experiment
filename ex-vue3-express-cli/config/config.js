@@ -61,7 +61,9 @@ const commonConfig = {
     resolve: {
         extensions: [".ts", ".js",],
         alias: {
-            '@': resolve('src', 'client')// 这样配置后 @ 可以指向 src 目录
+            '@': resolve('src', 'client'),// 这样配置后 @ 可以指向 src 目录
+            'vue$':resolve('node_modules','vue','index.js'),
+            // 'vue$':'vue/index.js',
         }
     },
 }
