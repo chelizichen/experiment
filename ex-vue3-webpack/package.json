@@ -11,7 +11,9 @@
     "build:client": "webpack --mode production --config ./config/webpack.config.js ",
     "build:server": "tsc --project tsconfig.server.json",
     "start": "node dist/app.js",
-    "debug": "up-script run dev"
+    "debug:dev": "up-script run dev",
+    "debug:prod":"up-script run prod",
+    "debug:start":"up-script run start"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +28,7 @@
   },
   "devDependencies": {
     "@vue/compiler-sfc": "^3.2.36",
+    "@babel/preset-typescript": "^7.22.5",
     "typescript": "^5.1.6",
     "vue-loader": "^17.0.1",
     "less-loader": "^11.1.3",

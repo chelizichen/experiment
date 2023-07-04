@@ -7,60 +7,6 @@ function resolve(...args) {
     return path.resolve(cwd(),...args)
 }
 
-
-const StyleRules = [
-    {
-        test: /\.s[ac]ss$/i,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
-        include: [resolve('src', 'client')]
-    },
-    {
-        test: /\.css$/, // 匹配css文件
-        use: [
-            "style-loader",
-            {
-                loader: "css-loader",
-                options: {
-                    importLoaders: 1, // css-loader前还有几个loader
-                },
-            },
-            {
-                loader: "postcss-loader",
-                options: {
-                    postcssOptions: {    // 对postcss的配置也可以单独抽离到一个文件中，这里就不抽取了。
-                        plugins: ['postcss-preset-env'],
-                    }
-                },
-            },
-        ],
-        include: [resolve('src', 'client')]
-    },
-    {
-        test: /\.less$/,
-        use: [
-            'style-loader',
-            {
-                loader: 'css-loader',
-                options: {
-                    importLoaders: 2
-                }
-            },
-            {
-                loader: 'postcss-loader',
-                options: {
-                    postcssOptions: {
-                        plugins: ['postcss-preset-env']
-                    }
-                }
-            },
-            'less-loader'
-        ],
-        include: [resolve('src', 'client')]
-    }
-
-]
-
-
 module.exports = {
     target: 'web',
     mode: "development",
@@ -101,41 +47,13 @@ module.exports = {
         port: "3419",
     },
     plugins: [
-
         new ForkTsCheckerWebapckPlugin()
     ],
     module: {
         rules: [
-            // js
-            {
-                test: /\.m?js$/,
-                exclude: /(node_modules|bower_components)/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        // 编译必须排除core-js中的代码，不然可能会发生错误
-                        exclude: [
-                            /node_modules[\\\/]core-js/,
-                            /node_modules[\\\/]webpack[\\\/]buildin/,
-                        ],
-                        presets: [['@babel/preset-env', {
-                            useBuiltIns: 'usage',
-                            corejs: 3
-                        }]]
-                    }
-                }
-            },
             // ts
             {
                 test: /\.ts$/,
-                // exclude: [
-                //     /node_modules/,
-                //     resolve("src/router"),
-                //     resolve("src/app.ts"),
-                // ],
-                // include: [
-                //     resolve("src/client")
-                // ],
                 use: {
                     loader: 'ts-loader',
                     options: {
@@ -144,7 +62,6 @@ module.exports = {
                     }
                 }
             },
-            ...StyleRules
         ]
     }
 }

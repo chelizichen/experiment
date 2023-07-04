@@ -15,7 +15,7 @@ const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const express = require('express')
 
-const app = require(resolve("src","app.ts")).ServerApplication
+const app = require(resolve("src", "app.ts")).ServerApplication;
 
 
 program.version("1.0.0")
@@ -60,12 +60,60 @@ program.version("1.0.0")
         }
         // 走生产打包
         if (args == "prod") {
-            
+            const buildServer = function (){
+                const tsServerJson = resolve('tsconfig.server.json')
+                const serverScripts = ` tsc --project ${tsServerJson} `;
+                const spawn = require('node:child_process');
+                const buildProcess = spawn.exec(serverScripts);
+                buildProcess.stdout.on("error", function (err) {
+                    console.log(err);
+                })
+                buildProcess.stdout.on("data", function (data) {
+                    console.log(data);
+                })
+            }
+            const buildClient = function (){
+                const { getDevServerOptions } = require("../lib/dev")
+                const buildConfig = getDevServerOptions(upConfig)
+                delete buildConfig.devServer;
+
+                const clientConfig = new Config();
+                const baseConfig = commonConfig("production"); // 基础配置
+                try {
+                    upConfig.clientChain(clientConfig);// 链式调用
+                } catch (error) {
+                    throw new Error(`chain call error:${error}`);
+                }
+                const afterMergeConfig = merge(baseConfig, clientConfig.toConfig(),buildConfig)
+                webpack(afterMergeConfig,function (err,stats){
+                    if(err){
+                        console.log(err)
+                        return
+                    }
+                    console.log(stats.toString())
+                    console.log("********开始打包服务端***********")
+                    buildServer()
+                });
+            }
+            buildClient()
         }
         // 走运行时
         if (args == "start") {
+
             
+            const spawn = require('node:child_process');
+            const requireEntryFile = require(resolve('dist', 'app.js'));
+            const port = upConfig.port
+            const publicPath = upConfig.publicPath
+            const app = requireEntryFile.ServerApplication
+            app.use(publicPath, express.static(resolve('public','assets')))
+            app.listen(port,function (){
+                console.log(`webpack out put at  localhost:${port}${publicPath}`);
+                console.log(`Express server is running on localhost:${port}`);
+            })
+
         }
+
     })
 
 

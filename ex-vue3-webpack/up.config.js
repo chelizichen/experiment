@@ -22,7 +22,7 @@ module.exports = {
     },
 
     clientChain:function(chain) {
-        chain.output.filename("[name].[contenthash:8].js").end()
+        chain.output.filename("bundle.js").end()
     },
     serverChain:function(chain) {
         

@@ -13,7 +13,7 @@
     "noUnusedParameters": false, // false
     "noImplicitReturns": true,
     "allowJs": true,
-    "isolatedModules": true,
+    "isolatedModules": false,
     "skipLibCheck": false,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
@@ -22,7 +22,8 @@
       "@": ["./src/client"],
       "@/*": ["./src/client/*"],
     },
+    "outDir":"./public/assets"
   },
   "exclude": ["./src/*.ts","./src/router/*.ts"],
-  "include": ["./src/client","dist/*"]
+  "include": ["./src/client"]
 }
