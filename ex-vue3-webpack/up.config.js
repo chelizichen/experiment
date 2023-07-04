@@ -7,7 +7,7 @@ module.exports = {
 
     // 打包的定义
     appName: "Tarsus",
-    serverName: "Center",
+    serverName: "center",
     proxy: {
         '/api': {
             target: 'http://localhost:3411/api', // 你要请求的目标接口地址

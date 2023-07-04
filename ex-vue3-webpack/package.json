@@ -13,7 +13,8 @@
     "start": "node dist/app.js",
     "debug:dev": "up-script run dev",
     "debug:prod":"up-script run prod",
-    "debug:start":"up-script run start"
+    "debug:start":"up-script run start",
+    "debug:release":"up-script run prod --release"
   },
   "keywords": [],
   "author": "",

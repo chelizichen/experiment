@@ -14,14 +14,17 @@ const { merge } = require('webpack-merge') // 获取merge函数
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const express = require('express')
+const { spawnSync,spawn,exec } = require("child_process")
+const { mkdirSync } = require("fs")
 
 const app = require(resolve("src", "app.ts")).ServerApplication;
 
 
 program.version("1.0.0")
-  .command("run <args>")
+    .command("run <args>")
+    .option("-r,--release","is release")
   .description("up test [dev,build,start]")
-    .action(async function (args) { 
+    .action(async function (args,opt) { 
         const commonConfig = require("../config/config")
         const upConfig = require(resolve("up.config.js"))
         // 走dev
@@ -63,13 +66,40 @@ program.version("1.0.0")
             const buildServer = function (){
                 const tsServerJson = resolve('tsconfig.server.json')
                 const serverScripts = ` tsc --project ${tsServerJson} `;
-                const spawn = require('node:child_process');
-                const buildProcess = spawn.exec(serverScripts);
+                const buildProcess = exec(serverScripts);
                 buildProcess.stdout.on("error", function (err) {
                     console.log(err);
                 })
                 buildProcess.stdout.on("data", function (data) {
                     console.log(data);
+                })
+                buildProcess.on("exit", function () {
+                    console.log("***********服务端打包结束***********");
+                    if (opt.release) {
+                        const fse = require('fs-extra');
+                        const { appName, serverName } = upConfig;
+                        const release_url = resolve('release');
+                        const release_src = resolve('release', `${appName}.${serverName}`)
+                        const tgz_url = resolve('release', `${appName}.${serverName}.tgz`);
+                        const pkg = resolve('package.json')
+                        const release_pkg = resolve('release', `${appName}.${serverName}`,'package.json')
+                        mkdirSync(release_url)
+                        mkdirSync(release_src)
+                        fse.copyFileSync(pkg, release_pkg) // 
+
+
+                        const download_production = `cd ${release_src} &&  npm install --production`;
+
+                        const download_cmd = spawn(download_production,{
+                            stdio: "pipe",
+                            shell: true,
+                            env: process.env,
+                        })
+
+                        
+
+                        // const build_cmd = 'tar .....'
+                    }
                 })
             }
             const buildClient = function (){
@@ -91,17 +121,17 @@ program.version("1.0.0")
                         return
                     }
                     console.log(stats.toString())
-                    console.log("********开始打包服务端***********")
+                    console.log("***********开始打包服务端***********")
                     buildServer()
                 });
             }
-            buildClient()
+            buildClient();
+
+            // prod 后 可以走release
+         
         }
         // 走运行时
         if (args == "start") {
-
-            
-            const spawn = require('node:child_process');
             const requireEntryFile = require(resolve('dist', 'app.js'));
             const port = upConfig.port
             const publicPath = upConfig.publicPath
