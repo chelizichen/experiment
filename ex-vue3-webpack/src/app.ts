@@ -8,6 +8,4 @@ const ServerApplication = express();
 
 ServerApplication.use("/api", testRouter.router)
 
-module.exports = {
-  ServerApplication,
-};
+module.exports = ServerApplication

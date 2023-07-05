@@ -17,7 +17,7 @@ const express = require('express')
 const { spawnSync, spawn, exec } = require("child_process")
 const { mkdirSync } = require("fs")
 
-const app = require(resolve("src", "app.ts")).ServerApplication;
+const app = require(resolve("src", "app.ts"));
 
 
 program.version("1.0.0")
