@@ -1,4 +1,4 @@
-import TaroUser, { Basic } from "./taro/TaroUser.taro";
+import TaroUser, { Basic } from "./taro/TaroUser";
 
 console.log(TaroUser);
 console.log(Basic);
