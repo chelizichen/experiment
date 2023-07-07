@@ -12,4 +12,6 @@ ex-vue3-webpack/public/assets
 
 ex-vue3-express-cli/node_modules
 
+ex-loader-test/node_modules
 
+ex-loader-test/dist
